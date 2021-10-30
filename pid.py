@@ -127,3 +127,8 @@ class PID:
         Based on a pre-determined sampe time, the PID decides if it should compute or return immediately.
         """
         self.sample_time = sample_time
+
+    def setSetPoint(self, setPoint)
+        """make it so you can just call the method to update the target setPoint
+        Will need this for the final version"""
+        self.setSetPoint = setPoint
