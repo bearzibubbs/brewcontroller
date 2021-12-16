@@ -22,10 +22,10 @@ except AttributeError:
     warnings.warn('time.monotonic() not available in python < 3.3, using time.time() as fallback')
 
 
-[docs]class PID(object):
+class PID(object):
     """A simple PID controller."""
 
-[docs]    def __init__(
+    def __init__(
         self,
         Kp=1.0,
         Ki=0.0,
@@ -81,7 +81,7 @@ except AttributeError:
         self.reset()
 
 
-[docs]    def __call__(self, input_, dt=None):
+    def __call__(self, input_, dt=None):
         """
         Update the PID controller.
 
@@ -178,7 +178,7 @@ except AttributeError:
         """Enable or disable the PID controller."""
         self.set_auto_mode(enabled)
 
-[docs]    def set_auto_mode(self, enabled, last_output=None):
+    def set_auto_mode(self, enabled, last_output=None):
         """
         Enable or disable the PID controller, optionally setting the last output value.
 
@@ -229,7 +229,7 @@ except AttributeError:
         self._integral = _clamp(self._integral, self.output_limits)
         self._last_output = _clamp(self._last_output, self.output_limits)
 
-[docs]    def reset(self):
+    def reset(self):
         """
         Reset the PID controller internals.
 
