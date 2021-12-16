@@ -3,7 +3,7 @@
 import controller.simple_pid
 import time
 import sys
-import spidev
+#import spidev
 
 def pid_loop(currentTemp):
     
@@ -39,15 +39,16 @@ if __name__ == "__main__":
 
     setTemp = int(args[0])
     start = time.time()
-    duration = 5
+    duration = 1 
     t_end = start + duration * 60
 
     # Connect to pt100 with spidev
-    pt100spi = spidev.SpiDev()
+    # pt100spi = spidev.SpiDev()
     # pt100spi.open(bus, device) -> needs bus and device name, needs a test with raspi
     # pt100spi.threewire = true
+    pt100_temp = 100
 
-    PID = controller.simple_pid.PID(Kp=1, Ki=1, Kd=1, setPoint=setTemp, sample_time=1)
+    PID = controller.simple_pid.PID(Kp=1, Ki=1, Kd=1, setpoint=setTemp, sample_time=1)
 
     while (time.time() < t_end ):
 
@@ -57,4 +58,4 @@ if __name__ == "__main__":
         pid_loop(pt100_temp)
         print(time.time(), t_end)
 
-    #PID.reset()
+    PID.reset()
