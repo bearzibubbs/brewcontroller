@@ -151,6 +151,14 @@ class PID(object):
         ).format(self=self)
 
     @property
+    def temperature(self):
+        return self.setpoint
+
+    @temperature.setter(self, temperature):
+        """Change the set temperature during a run"""
+        self.setpoint = temperature
+
+    @property
     def components(self):
         """
         The P-, I- and D-terms from the last computation as separate components as a tuple. Useful
