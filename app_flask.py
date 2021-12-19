@@ -14,23 +14,21 @@ def home():
 @app.route('/api/v1/runpid', methods=['POST', 'PUT'])
 def api_runpid():
 
-    if !request.is_json():
+    if not request.is_json():
         return "yo this ain't json"
+    if request.methods == 'POST':
+        setTemp = request.get_json()['setTemp']
+        pid = controller.simple_pid.PID(Kp=1, Ki=1, Kd=1, setPoint=setTemp, sample_time=1)
 
-    setTemp = request.get_json()['setTemp']
-    pid = controller.simple_pid.PID(Kp=1, Ki=1, Kd=1, setPoint=setTemp, sample_time=1)
+        start = time.time()
+        duration = 1 
+        t_end = start + duration * 60
 
-    start = time.time()
-    duration = 1 
-    t_end = start + duration * 60
+        currTemp = 1
+        pid(currTemp)
+    elif request.methods == 'PUT':
+        setTemp = request.get_json()['setTemp']
+        currTemp = 1
+        pid(currTemp)
 
-    currTemp = 1
-
-    pid(currTemp)
-
-    
-@app.route('/api/v1/updatepid', methods=['GET'])
-def api_
-
- 
- app.run()
+app.run()

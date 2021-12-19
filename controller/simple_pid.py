@@ -152,11 +152,12 @@ class PID(object):
 
     @property
     def temperature(self):
-        return self.setpoint
+        return self._setpoint
 
-    @temperature.setter(self, temperature):
+    @temperature.setter
+    def temperature(self, temperature):
         """Change the set temperature during a run"""
-        self.setpoint = temperature
+        self._setpoint = temperature
 
     @property
     def components(self):
