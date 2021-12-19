@@ -150,6 +150,10 @@ class PID(object):
             ')'
         ).format(self=self)
 
+    """
+    Start of Peter's additions
+    """
+
     @property
     def temperature(self):
         return self._setpoint
@@ -158,6 +162,21 @@ class PID(object):
     def temperature(self, temperature):
         """Change the set temperature during a run"""
         self._setpoint = temperature
+
+    @property
+    def dutycycle(self):
+        return self._last_output
+
+    @dutycycle.getter
+    def dutycycle(self):
+        try:
+            return print(self._last_output)
+        except:
+            return print("pid is not running")
+
+    """
+    End of Peter's additions
+    """
 
     @property
     def components(self):
