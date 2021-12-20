@@ -47,4 +47,7 @@ pid = controller.simple_pid.PID(Kp=1, Ki=1, Kd=1, setpoint=0, sample_time=1)
 
 print( "PID initialized" )
 
+currTemp = 1
+pid(currTemp)
+print(pid.dutycycle())
 app.run()

@@ -170,7 +170,7 @@ class PID(object):
     @dutycycle.getter
     def dutycycle(self):
         try:
-            return print(self._last_output)
+            return self._last_output
         except:
             return print("pid is not running")
 
