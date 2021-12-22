@@ -3,7 +3,9 @@ from flask import request, jsonify
 import controller.simple_pid
 import time
 
+
 app = flask.Flask(__name__)
+pid = controller.simple_pid.PID()
 
 @app.route('/', methods=['GET'])
 def home():
@@ -23,21 +25,16 @@ def api_updatepid():
         currTemp = 1
         pid(currTemp)
 
-@app.route('/api/v1/getPID', methods=['GET'])
-def api_getPID():
-    try: 
-        pid
-    except NameError:
-        var_exists = False
-    else: 
-        var_exists = True
-        
-    if not var_exists:
-        return "PID is not initialized"    
-    
-    return pid.dutycycle(), 200
+@app.route('/api/v1/getpid', methods=['GET'])
+def api_getpid():
+    if not pid.dutycycle:
+        return "Pid loop not engaged \n"    
+    return jsonify(pid.dutycycle)
 
-pid = controller.simple_pid.PID(Kp=1, Ki=1, Kd=1, setpoint=0, sample_time=1)
+
+if __name__ == "__main__":
+    app.run()
+
 
 """ Timing code placeholder 
         start = time.time()
@@ -45,9 +42,4 @@ pid = controller.simple_pid.PID(Kp=1, Ki=1, Kd=1, setpoint=0, sample_time=1)
         t_end = start + duration * 60
 """
 
-print( "PID initialized" )
 
-currTemp = 1
-pid(currTemp)
-print(pid.dutycycle())
-app.run()
