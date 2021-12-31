@@ -4,6 +4,7 @@ import controller.simple_pid
 import time
 import sys
 #import spidev
+import controller.pwm 
 
 def pid_loop(currentTemp):
     
@@ -48,14 +49,18 @@ if __name__ == "__main__":
     # pt100spi.threewire = true
     pt100_temp = 100
 
+
     PID = controller.simple_pid.PID(Kp=1, Ki=1, Kd=1, setpoint=setTemp, sample_time=1)
+    PWM = controller.pwm(1/PID.sample_time)
+    PWM.startPWM(0)
 
     while (time.time() < t_end ):
 
         # get pt100 temp reading
         # pt100_temp = pt100spi.readbytes(n) spidev something someting
 
-        pid_loop(pt100_temp)
+        latest = pid_loop(pt100_temp)
+        PWM.updatePWM(latest)
         print(time.time(), t_end)
 
     PID.reset()

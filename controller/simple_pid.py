@@ -174,6 +174,17 @@ class PID(object):
         except:
             return print("pid is not running")
 
+    @property
+    def sampletime(self):
+        return self._sample_time
+
+    @sampletime.getter
+    def sampletime(self):
+        try:
+            return self._sample_time
+        except:
+            return print("no PWM object")
+
     """
     End of Peter's additions
     """
