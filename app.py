@@ -41,18 +41,18 @@ if __name__ == "__main__":
     setTemp = int(args[0])
     start = time.time()
     duration = 1 
-    t_end = start + duration * 60
+    t_end = start + duration * 60 # need to use camel or snake
 
     # Connect to pt100 with spidev
     # pt100spi = spidev.SpiDev()
     # pt100spi.open(bus, device) -> needs bus and device name, needs a test with raspi
     # pt100spi.threewire = true
-    pt100_temp = 100
+    pt100_temp = 100 # need to use camel or snake
 
 
-    PID = controller.simple_pid.PID(Kp=1, Ki=1, Kd=1, setpoint=setTemp, sample_time=1)
-    PWM = controller.pwm(1/PID.sample_time)
-    PWM.startPWM(0)
+    dutyCycleOut = controller.simple_pid.PID(Kp=1, Ki=1, Kd=1, setpoint=setTemp, sample_time=1)
+    pulseOutput = controller.pwm(1/PID.sample_time)
+    ## needs to be edited PWM.getInstance().start(pulseOutput.pin, pulseOutput.freq)
 
     while (time.time() < t_end ):
 
@@ -60,7 +60,7 @@ if __name__ == "__main__":
         # pt100_temp = pt100spi.readbytes(n) spidev something someting
 
         latest = pid_loop(pt100_temp)
-        PWM.updatePWM(latest)
+        pulseOutput.updatePWM(latest) # update for new getInstance()
         print(time.time(), t_end)
 
-    PID.reset()
+    dutyCycleOut.reset()

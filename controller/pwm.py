@@ -3,26 +3,27 @@ import RPi.GPIO as IO
 
 class PWM:
 
-    def __init__(self, freq):
+    def __init__(self, freq, pin):
+        self._pin = pin
+        self._freq = freq
+        self.PWM = IO.PWM(self.pin, self.freq)
+
         IO.setmode(IO.BCM)
-        IO.setup(19, IO.OUT)
-        self.PWM = IO.PWM(13, freq)
+        IO.setup(self.pin, IO.OUT)
 
-
-    def startPWM(self, dutycycle):
-        self.PWM.start(dutycycle)
-
-    def updatePWM(self, dutycycle):
-        self.PWM.ChangeDutyCycle(dutycycle)
-
+    def getInstance(self):
+        return self.PWM
+    
     def reset(self):
-        IO.output(13, IO.LOW)
-        self.PWM = IO.PWM(13, 0)
+        IO.output(self.pin, IO.LOW)
+        self.PWM = IO.PWM(self.pin, 0)
         self.updatePWM(0)
-        IO.cleanup(13)
+        return "Pin " + self.pin + " has been set to IO.LOW and PWM freq and dutycycle set to 0."
 
     def __del__(self):
         self.reset()
+        IO.cleanup(self.pin)
+        return "Pin " + self.pin + " has been set to IO.LOW and PWM object has been cleared."
 
 
 

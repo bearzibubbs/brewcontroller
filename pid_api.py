@@ -14,7 +14,7 @@ def home():
     '''
 
 @app.route('/api/v1/updatepid', methods=['POST', 'PUT'])
-def api_updatepid():
+def api_updatepid(): ## should pick put or post, otherwise it's confusing. 
 
     if not request.is_json:
         return "yo this ain't json"
