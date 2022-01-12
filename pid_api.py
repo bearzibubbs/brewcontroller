@@ -1,11 +1,10 @@
 import flask
-from flask import request, jsonify
+from flask import request, jsonify, make_response
 import controller.simple_pid
 import time
-
+import controller.pwm
 
 app = flask.Flask(__name__)
-pid = controller.simple_pid.PID()
 
 @app.route('/', methods=['GET'])
 def home():
@@ -13,27 +12,48 @@ def home():
     <p> This is the main page for now </p>
     '''
 
-@app.route('/api/v1/updatepid', methods=['POST', 'PUT'])
-def api_updatepid(): ## should pick put or post, otherwise it's confusing. 
-
+@app.route('/api/v1/updatesettemp', methods=['PUT'])
+def api_updatesettemp():
     if not request.is_json:
         return "yo this ain't json"
-    if request.method == 'POST':
-        setTemp = int(request.get_json()['setTemp'])
+    if not request.get_json()['setTemp']:
+        return make_response(jsonify({"Incorrectly formatted call"}), 300)
     elif request.method == 'PUT':
+        if not request.get_json()['setTemp']:
+            return make_response(jsonify({"Incorrectly formatted call"}), 300)
         setTemp = request.get_json()['setTemp']
-        currTemp = 1
-        pid(currTemp)
+        return make_response(jsonify("Target temperature set to: " + setTemp), 200)
 
-@app.route('/api/v1/getpid', methods=['GET'])
-def api_getpid():
-    if not pid.dutycycle:
+@app.route('/api/v1/piddutycycle', methods=['GET'])
+def api_pidDutycycle():
+    if not pidControl.dutycycle:
         return "Pid loop not engaged \n"    
-    return jsonify(pid.dutycycle)
+    return make_response(jsonify(pidControl.dutycycle), 200)
 
+
+'''
+@app.route('/api/v1/pidfrequency', methods=['GET'])
+def api_pidFrequency():
+    return make_response(jsonify(pidControl.frequency))
+'''
 
 if __name__ == "__main__":
     app.run()
+    
+    pidControl = controller.simple_pid.PID(Kp=1, Ki=1, Kd=1, setpoint=0, sample_time=0.05)
+
+    start =  time.time()
+    duration = 60
+    end = start - duration * 60
+    pulseOutput = controller.pwm(1/pidControl.sample_time, 13)
+
+    while (time.time() < end ):
+        latest = pidControl(pt100Temp)
+        pulseOutput.updatePWM(latest)
+        print(time.time(), end)
+
+    pulseOutput.reset()
+
 
 
 """ Timing code placeholder 
