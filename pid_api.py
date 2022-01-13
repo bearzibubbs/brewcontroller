@@ -3,6 +3,7 @@ from flask import request, jsonify, make_response
 import controller.simple_pid
 import time
 import controller.pwm
+import temperature.probe
 
 app = flask.Flask(__name__)
 
@@ -12,23 +13,28 @@ def home():
     <p> This is the main page for now </p>
     '''
 
-@app.route('/api/v1/updatesettemp', methods=['PUT'])
-def api_updatesettemp():
+@app.route('/api/v1/updatetargettemp', methods=['PUT'])
+def api_updateTargetTemp():
     if not request.is_json:
         return "yo this ain't json"
     if not request.get_json()['setTemp']:
         return make_response(jsonify({"Incorrectly formatted call"}), 300)
-    elif request.method == 'PUT':
-        if not request.get_json()['setTemp']:
-            return make_response(jsonify({"Incorrectly formatted call"}), 300)
-        setTemp = request.get_json()['setTemp']
-        return make_response(jsonify("Target temperature set to: " + setTemp), 200)
+    setTemp = request.get_json()['setTemp']
+    return make_response(jsonify("Target temperature set to: " + setTemp), 200)
 
 @app.route('/api/v1/piddutycycle', methods=['GET'])
 def api_pidDutycycle():
     if not pidControl.dutycycle:
         return "Pid loop not engaged \n"    
     return make_response(jsonify(pidControl.dutycycle), 200)
+
+@app.route('/api/v1/healtcheck', methods=['GET'])
+def api_healthcheck():
+    response = {
+        "currentTemp": currentTemp
+        ""
+    }
+    return make_response(jsonify("ok"), 200)
 
 
 '''
@@ -47,8 +53,10 @@ if __name__ == "__main__":
     end = start - duration * 60
     pulseOutput = controller.pwm(1/pidControl.sample_time, 13)
 
+    currentTemp = temperature.probe()
+
     while (time.time() < end ):
-        latest = pidControl(pt100Temp)
+        latest = pidControl(currentTemp.getTemp())
         pulseOutput.updatePWM(latest)
         print(time.time(), end)
 
