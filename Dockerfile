@@ -4,7 +4,7 @@ WORKDIR /opt/brewcontroller/
 
 COPY . .
 
-RUN ["sudo", "apt", "install", "setuptools"]
+RUN ["apt", "install", "setuptools"]
 
 RUN ["python", "-m", "pip", "install", "-r", "requirements.txt"]
 
