@@ -8,4 +8,4 @@ spidev==3.5
 adafruit-circuitpython-max31865==2.2.10
 adafruit-circuitpython-busdevice==5.1.1
 Adafruit-Blinka==6.17.0
-#RPi.GPIO==0.7.0
+RPi.GPIO==0.7.0
