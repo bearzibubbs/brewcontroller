@@ -13,15 +13,15 @@ def home():
     <p> This is the main page for now </p>
     '''
 
-@app.route('/api/v1/updatetargettemp', methods=['PUT'])
-def api_updateTargetTemp():
+@app.route('/api/v1/updatesettemp', methods=['PUT'])
+def api_updatesettemp():
     if not request.is_json:
         return "yo this ain't json"
-    if not request.get_json()['setTemp']:
-        return make_response(jsonify({"Incorrectly formatted call"}), 300)
-    setTemp = request.get_json()['setTemp']
-    return make_response(jsonify("Target temperature set to: " + setTemp), 200)
-
+    if request.get_json()['setTemp']:
+        setTemp = request.get_json()['setTemp']
+        return make_response(jsonify("Target temperature set to: " + setTemp), 200)
+    return make_response(jsonify({"Incorrectly formatted call"}), 300)
+    
 @app.route('/api/v1/piddutycycle', methods=['GET'])
 def api_pidDutycycle():
     if not pidControl.dutycycle:
@@ -32,7 +32,6 @@ def api_pidDutycycle():
 def api_healthcheck():
     response = {
         "currentTemp": currentTemp
-        ""
     }
     return make_response(jsonify("ok"), 200)
 
@@ -47,13 +46,14 @@ if __name__ == "__main__":
     app.run()
     
     pidControl = controller.simple_pid.PID(Kp=1, Ki=1, Kd=1, setpoint=0, sample_time=0.05)
+    tempProbe = temperature.probe()
 
+    currentTemp = tempProbe.getTemp()
     start =  time.time()
     duration = 60
     end = start - duration * 60
     pulseOutput = controller.pwm(1/pidControl.sample_time, 13)
 
-    currentTemp = temperature.probe()
 
     while (time.time() < end ):
         latest = pidControl(currentTemp.getTemp())
