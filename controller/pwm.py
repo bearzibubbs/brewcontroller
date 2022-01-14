@@ -14,6 +14,9 @@ class PWM:
     def getInstance(self):
         return self.PWM
     
+    def updatePWM(self, newFreq):
+        self.PWM = IO.PWM(self.pin, newFreq)
+
     def reset(self):
         IO.output(self.pin, IO.LOW)
         self.PWM = IO.PWM(self.pin, 0)
