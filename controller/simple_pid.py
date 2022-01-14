@@ -167,23 +167,9 @@ class PID(object):
     def dutycycle(self):
         return self._last_output
 
-    @dutycycle.getter
-    def dutycycle(self):
-        try:
-            return self._last_output
-        except:
-            return print("pid is not running")
-
     @property
     def sampletime(self):
         return self._sample_time
-
-    @sampletime.getter
-    def sampletime(self):
-        try:
-            return self._sample_time
-        except:
-            return print("no PWM object")
 
     """
     End of Peter's additions
