@@ -1,4 +1,4 @@
-FROM docker.io/arm32v7/python:3.10.1
+FROM docker.io/arm32v7/python:3.10.1-bullseye
 
 WORKDIR /opt/brewcontroller/
 
