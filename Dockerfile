@@ -4,7 +4,7 @@ WORKDIR /opt/brewcontroller/
 
 COPY . .
 
-RUN ["apt", "install", "python3-setuptools"]
+#RUN ["apt", "install", "python3-setuptools"]
 
 RUN ["python", "-m", "pip", "install", "-r", "requirements.txt"]
 
