@@ -6,6 +6,8 @@ COPY . .
 
 RUN ["python", "-m", "pip", "install", "-r", "requirements.txt"]
 
+RUN ["sudo", "apt", "install", "setuptools"]
+
 ENV FLASK_APP=pid_api
 ENV FLASK_ENV=development
 
