@@ -27,7 +27,6 @@ def api_pidDutycycle():
     if not pidControl.dutycycle:
         return "Pid loop not engaged \n"    
     return make_response(jsonify(pidControl.dutycycle), 200)
-
 @app.route('/api/v1/healtcheck', methods=['GET'])
 def api_healthcheck():
     response = {
@@ -42,25 +41,24 @@ def api_pidFrequency():
     return make_response(jsonify(pidControl.frequency))
 '''
 
-if __name__ == "__main__":
-    app.run()
+app.run()
     
-    pidControl = controller.simple_pid.PID(Kp=1, Ki=1, Kd=1, setpoint=0, sample_time=0.05)
-    tempProbe = temperature.probe()
+pidControl = controller.simple_pid.PID(Kp=1, Ki=1, Kd=1, setpoint=0, sample_time=0.05)
+tempProbe = temperature.probe()
 
-    currentTemp = tempProbe.getTemp()
-    start =  time.time()
-    duration = 60
-    end = start - duration * 60
-    pulseOutput = controller.pwm(1/pidControl.sample_time, 13)
+currentTemp = tempProbe.getTemp()
+start =  time.time()
+duration = 60
+end = start - duration * 60
+pulseOutput = controller.pwm(1/pidControl.sample_time, 13)
 
 
-    while (time.time() < end ):
-        latest = pidControl(currentTemp.getTemp())
-        pulseOutput.updatePWM(latest)
-        print(time.time(), end)
+while (time.time() < end ):
+    latest = pidControl(currentTemp.getTemp())
+    pulseOutput.updatePWM(latest)
+    print(time.time(), end)
 
-    pulseOutput.reset()
+pulseOutput.reset()
 
 
 
