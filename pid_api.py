@@ -50,7 +50,7 @@ currentTemp = tempProbe.getTemp()
 start =  time.time()
 duration = 60
 end = start - duration * 60
-pulseOutput = controller.pwm(1/pidControl.sample_time, 13)
+pulseOutput = controller.pwm.PWM(1/pidControl.sample_time, 13)
 
 
 while (time.time() < end ):
