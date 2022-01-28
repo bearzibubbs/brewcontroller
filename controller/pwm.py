@@ -21,8 +21,6 @@ class PWM:
 
     def reset(self):
         IO.output(self._pin, IO.LOW)
-        self.PWM = IO.PWM(self._pin, 0)
-        self.updatePWM(0)
         return "Pin " + self._pin + " has been set to IO.LOW and PWM freq and dutycycle set to 0."
 
     def __del__(self):
