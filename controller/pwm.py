@@ -3,15 +3,16 @@ import RPi.GPIO as IO
 
 class PWM:
 
-    def __init__(self, freq, pin):
+    def __init__(self, pin):
         self._pin = pin
-        self._freq = freq
+        self._freq = 0
 
         IO.setmode(IO.BCM)
         IO.setup(pin, IO.OUT)
-        self.PWM = IO.PWM(pin, freq)
-
-
+    
+    def startPWM(self, freq):
+        self.PWM = IO.PWM(self._pin, freq)
+    
     def getInstance(self):
         return self.PWM
     
