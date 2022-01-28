@@ -12,8 +12,8 @@ import adafruit_max31865
 class tempProbe():
     def __init__(self):
         self._spi = board.SPI()
-        self.cs = digitalio.DigitalInOut(board.D5)
-        self._sensor = adafruit_max31865.MAX31865(_spi, _cs)
+        self._cs = digitalio.DigitalInOut(board.D5)
+        self._sensor = adafruit_max31865.MAX31865(self._spi, self._cs)
     
     def getTemp(self):
         return self._sensor.temperature
