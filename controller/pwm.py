@@ -6,10 +6,11 @@ class PWM:
     def __init__(self, freq, pin):
         self._pin = pin
         self._freq = freq
-        self.PWM = IO.PWM(pin, freq)
 
         IO.setmode(IO.BCM)
         IO.setup(pin, IO.OUT)
+        self.PWM = IO.PWM(pin, freq)
+
 
     def getInstance(self):
         return self.PWM
