@@ -11,12 +11,12 @@ import adafruit_max31865
 
 class tempProbe():
     def __init__(self):
-        _spi = board.SPI()
-        _cs = digitalio.DigitalInOut(board.D5)
-        _sensor = adafruit_max31865.MAX31865(_spi, _cs)
+        self._spi = board.SPI()
+        self.cs = digitalio.DigitalInOut(board.D5)
+        self._sensor = adafruit_max31865.MAX31865(_spi, _cs)
     
     def getTemp(self):
-        return _sensor.temperature
+        return self._sensor.temperature
 
 # Main loop to print the temperature every second.
 #while True:

@@ -44,7 +44,7 @@ def api_pidFrequency():
 app.run()
     
 pidControl = controller.simple_pid.PID(Kp=1, Ki=1, Kd=1, setpoint=0, sample_time=0.05)
-tempProbe = temperature.probe()
+tempProbe = temperature.probe.tempProbe()
 
 currentTemp = tempProbe.getTemp()
 start =  time.time()
