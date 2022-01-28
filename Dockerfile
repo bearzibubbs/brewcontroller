@@ -4,6 +4,8 @@ WORKDIR /opt/brewcontroller/
 
 ENV CFLAGS=-fcommon
 
+COPY requirements.txt requirements.txt
+
 #RUN ["apt", "install", "python3-setuptools"]
 
 RUN ["python", "-m", "pip", "install", "--no-cache-dir", "-r", "requirements.txt"]
