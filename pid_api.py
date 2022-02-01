@@ -27,6 +27,7 @@ def api_pidDutycycle():
     if not pidControl.dutycycle:
         return "Pid loop not engaged \n"    
     return make_response(jsonify(pidControl.dutycycle), 200)
+
 @app.route('/api/v1/healtcheck', methods=['GET'])
 def api_healthcheck():
     response = {
