@@ -1,5 +1,5 @@
 import flask
-from flask import request, jsonify, make_response
+from flask import request, jsonify, make_response, render_template
 import controller.simple_pid
 import time
 import controller.pwm
@@ -9,9 +9,11 @@ app = flask.Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def home():
-    return ''' <h1> index </h1>
-    <p> This is the main page for now </p>
-    '''
+    
+    return render_template('index.html')
+#    return ''' <h1> index </h1>
+#   <p> This is the main page for now </p>
+#  '''
 
 @app.route('/api/v1/updatesettemp', methods=['PUT'])
 def api_updatesettemp():
