@@ -1,9 +1,17 @@
 <!doctype html>
 <html>
     <head>
-        <title></title>
+        <title>
+            {% if title %}
+                <h1>Nekobrew Control - {{ title }} </h1>
+            {% else %}
+                <h1>Nekobrew Control</h1>
+            {% endif %}
+        </title>
     </head>
     <body>
+        {% block content %}
 
+        {% endblock content %}
     </body>
 </html>
