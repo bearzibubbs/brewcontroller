@@ -7,6 +7,25 @@ import temperature.probe
 
 app = flask.Flask(__name__)
 
+pidControl = controller.simple_pid.PID(Kp=1, Ki=1, Kd=1, setpoint=0, sample_time=0.05)
+tempProbe = temperature.probe.tempProbe()
+
+currentTemp = tempProbe.getTemp()
+start =  time.time()
+duration = 60
+end = start - duration * 60
+pulseOutput = controller.pwm.PWM(13)
+pulseOutput.startPWM(1/pidControl.sample_time)
+
+
+""" while (time.time() < end ):
+    latest = pidControl(currentTemp.getTemp())
+    pulseOutput.updatePWM(latest)
+    print(time.time(), end)
+
+pulseOutput.reset()
+ """
+
 @app.route('/', methods=['GET'])
 def home():
     
@@ -45,7 +64,7 @@ def api_pidFrequency():
 '''
 
 #app.run()
-    
+""" 
 pidControl = controller.simple_pid.PID(Kp=1, Ki=1, Kd=1, setpoint=0, sample_time=0.05)
 tempProbe = temperature.probe.tempProbe()
 
@@ -63,7 +82,7 @@ while (time.time() < end ):
     print(time.time(), end)
 
 pulseOutput.reset()
-
+ """
 
 
 """ Timing code placeholder 
