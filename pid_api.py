@@ -63,7 +63,7 @@ def api_pidFrequency():
     return make_response(jsonify(pidControl.frequency))
 '''
 
-#app.run()
+app.run()
 """ 
 pidControl = controller.simple_pid.PID(Kp=1, Ki=1, Kd=1, setpoint=0, sample_time=0.05)
 tempProbe = temperature.probe.tempProbe()
