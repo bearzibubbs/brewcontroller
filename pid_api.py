@@ -18,7 +18,7 @@ pulseOutput = controller.pwm.PWM(13, 1/pidControl.sample_time)
 
 # step through once
 
-pidControl(currentTemp.getTemp())
+pidControl(tempProbe.getTemp())
 
 """ while (time.time() < end ):
     latest = pidControl(currentTemp.getTemp())
