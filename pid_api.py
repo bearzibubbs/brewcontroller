@@ -15,7 +15,10 @@ start =  time.time()
 duration = 60
 end = start - duration * 60
 pulseOutput = controller.pwm.PWM(13)
-pulseOutput.startPWM(1/pidControl.sample_time)
+
+# step through once
+
+pidControl(currentTemp.getTemp())
 
 """ while (time.time() < end ):
     latest = pidControl(currentTemp.getTemp())

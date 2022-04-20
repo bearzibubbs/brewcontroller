@@ -9,15 +9,16 @@ class PWM:
 
         IO.setmode(IO.BCM)
         IO.setup(pin, IO.OUT)
+        self.PWM = IO.PWM(self._pin, self._freq)
     
-    def startPWM(self, freq):
-        self.PWM = IO.PWM(self._pin, freq)
+    def startPWM(self, dutycycle):
+        self.PWM.start(dutycycle)
     
     def getInstance(self):
         return self.PWM
     
-    def updatePWM(self, newFreq):
-        self.PWM = IO.PWM(self._pin, newFreq)
+    def updatePWM(self, newDutycycle):
+        self.PWM.ChangeDutyCycle(newDutycycle)
 
 """     def reset(self):
         IO.output(self._pin, IO.LOW)
