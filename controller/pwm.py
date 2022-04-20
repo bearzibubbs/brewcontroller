@@ -3,9 +3,9 @@ import RPi.GPIO as IO
 
 class PWM:
 
-    def __init__(self, pin):
+    def __init__(self, pin, freq):
         self._pin = pin
-        self._freq = 0
+        self._freq = freq
 
         IO.setmode(IO.BCM)
         IO.setup(pin, IO.OUT)
