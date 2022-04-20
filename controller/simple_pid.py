@@ -165,7 +165,7 @@ class PID(object):
 
     @property
     def dutycycle(self):
-        return self._last_output
+        return self.output
 
     @property
     def sampletime(self):
